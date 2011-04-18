@@ -19,6 +19,7 @@ charset: "UTF-8"
 # template_toolkit: TT
 
 template: "simple"
+session: "simple"
 
 # template: "template_toolkit"
 # engines:
@@ -30,10 +31,8 @@ template: "simple"
 
 plugins:
     Database:
-        connections:
-            lmfaobox:
-                driver: "SQLite"
-                database: "lmfaobox.sqlite"
-                dbi_params:
-                    RaiseError: 1
-                    AutoCommit: 1
+        driver: "SQLite"
+        database: "lmfaobox.sqlite"
+        dbi_params:
+            RaiseError: 1
+            AutoCommit: 1

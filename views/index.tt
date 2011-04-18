@@ -1,10 +1,14 @@
 <div id="page">
+
+    <span id="flash"><% flash.info %></span>
+    <span id="error"><% flash.error %></span>
+
     <h1>Sign up for CSH Notifications on LMFAOBox!</h1>
-    <form>
+    <form action='/add/address' method='post'>
         <label for=name />Name: </label>
         <input name=name type=text />
-        <label for=email />Email: </label>
-        <input name=email type=text />
+        <label for=address />Address: </label>
+        <input name=address type=text />
         <select name=carrier>
             <option>Email address</option>
         </select>
