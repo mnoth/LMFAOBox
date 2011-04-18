@@ -4,7 +4,7 @@ use Dancer::Plugin::Auth::RBAC;
 use Dancer::Plugin::Database;
 use Dancer::Plugin::Email;
 use Dancer::Plugin::FlashMessage;
-use URI::Escape
+use Mail::RFC822::Address qw/valid/;
 
 our $VERSION = '1.0';
 
@@ -34,17 +34,25 @@ post '/members/add' => sub {
     my $address = params->{'address'};
 
     if (params->{'carrier'} ne 'Email address') {
-        $address .= '@';
-        $address .= database->quick_select('carriers', { name => params->{'carrier'} })->{'suffix'};
+        $address =~ tr/\r\n\t A-Za-z()[]\-!@#$%^&*<>\/?//d;
+        if (length($address) != 7 or length($address) != 10) {
+            $address = "";
+        }
+
+        $address .= '@'.database->quick_select('carriers', { name => params->{'carrier'} })->{'suffix'};
     }
 
-    database->quick_insert('members', { 
-                                name => params->{'name'}, 
-                                address => $address
-                            }) 
-       or flash(error => $DBI::errstr);
+    if (valid($address)) {
+        database->quick_insert('members', { 
+                                    name => params->{'name'}, 
+                                    address => $address
+                                }) 
+           or flash(error => $DBI::errstr);
+        flash(info => 'Added your address');
+    } else {
+        flash(error => 'Invalid address');
+    }
 
-    flash(info => 'Added your address');
     redirect '/';
 };
 
