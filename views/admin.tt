@@ -1,9 +1,3 @@
-<div id="header">
-    <a href="/" alt="Send message">Message</a>
-    <a href="/members/list" alt="Manage members">Membership</a>
-    <a href="/carriers/list" alt="Add carriers">Carriers</a>
-</div>
-
 <div id="page">
 
     <% IF flash.info %>

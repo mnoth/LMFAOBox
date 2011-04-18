@@ -39,3 +39,13 @@ plugins:
         dbi_params:
             RaiseError: 1
             AutoCommit: 1
+
+    Auth::RBAC:
+        credentials:
+            class: Config
+            options:
+                accounts:
+                    admin:
+                        password: admin
+                        roles:
+                            - admin

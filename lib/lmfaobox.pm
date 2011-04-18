@@ -1,5 +1,6 @@
 package lmfaobox;
 use Dancer ':syntax';
+use Dancer::Plugin::Auth::RBAC;
 use Dancer::Plugin::Database;
 use Dancer::Plugin::Email;
 use Dancer::Plugin::FlashMessage;
@@ -10,15 +11,18 @@ use 5.012;
 
 our $VERSION = '1.0';
 
-get '/' => sub {
-    if ($ENV{REMOTE_USER}) {
-        template 'admin';
-    } else {
-        my @carriers = database->quick_select('carriers', { 1 => 1 });
-        template 'index', {
-            carriers => \@carriers
-        };
+before sub {
+    if (not authd() and request->path_info ne '/login') {
+        request->path_info('/');
     }
+};
+
+get '/' => sub {
+    my @carriers = database->quick_select('carriers', { 1 => 1 });
+    template 'index', {
+        carriers => \@carriers,
+        auth => authd
+    };
 };
 
 post '/members/add' => sub {
@@ -33,7 +37,7 @@ post '/members/add' => sub {
                                 name => params->{'name'}, 
                                 address => $address
                             }) 
-        or flash(error => $DBI::errstr);
+       or flash(error => $DBI::errstr);
 
     flash(info => 'Added your address');
     redirect '/';
@@ -57,7 +61,8 @@ get '/members/list' => sub {
         flash(error => $DBI::errstr);
 
     template 'members', {
-        'members' => \@members
+        members => \@members,
+        auth => authd
     };
 };
 
@@ -73,7 +78,8 @@ get '/carriers/list' => sub {
         flash(error => $DBI::errstr);
 
     template 'carriers', {
-        'carriers' => \@carriers
+        carriers => \@carriers,
+        auth => authd
     };
 };
 
@@ -91,6 +97,15 @@ get '/carriers/delete/:name' => sub {
     database->quick_delete('carriers', { name => params->{'name'} }) or flash(error => $DBI::errstr);
     flash(info => "Carrier deleted");
     redirect '/carriers/list';
+};
+
+post '/login' => sub {
+    my $auth = auth(params->{'user'}, params->{'pass'});
+    if ($auth->errors) {
+        say $auth->errors;
+    } else {
+        redirect '/';
+    }
 };
 
 true;

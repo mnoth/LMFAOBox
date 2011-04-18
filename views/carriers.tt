@@ -1,0 +1,26 @@
+<div id="page">
+
+    <% IF flash.info %>
+        <span id="flash"><% flash.info %></span>
+    <% END %>
+
+    <% IF flash.error %>
+        <span id="error"><% flash.error %></span>
+    <% END %>
+
+
+    <table><tr><th>Name</th><th>Suffix</th></tr>
+    <% FOREACH carrier = carriers %>
+    <tr><td><% carrier.name %></td><td><% carrier.suffix %></td><td><a href="/carriers/delete/<% carrier.name %>">Delete</a></td></tr>
+    <% END %>
+    </table>
+
+    <form action="/carriers/add" method="post">
+        <label for="name">Name: </label>
+        <input type="text" name="name" />
+        <label for="suffix">Suffix: </label>
+        <input type="text" name="suffix" />
+        <input type="submit" value="Submit" />
+    </form>
+
+</div>

@@ -8,6 +8,16 @@
         <span id="error"><% flash.error %></span>
     <% END %>
 
+    <% IF NOT auth %>
+        <form action="/login" method="post">
+            <label for="user">Username: </label>
+            <input type="text" name="user" />
+            <label for="pass">Password: </label>
+            <input type="password" name="pass" />
+            <input type="submit" value="Submit" />
+        </form>
+    <% END %>
+
     <h1>Sign up for CSH Notifications on LMFAOBox!</h1>
     <form action="/members/add" method="post">
         <label for="name" />Name: </label>
