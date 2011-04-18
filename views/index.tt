@@ -9,13 +9,16 @@
     <% END %>
 
     <h1>Sign up for CSH Notifications on LMFAOBox!</h1>
-    <form action="/address/add" method="post">
+    <form action="/members/add" method="post">
         <label for="name" />Name: </label>
         <input name="name" type="text" />
         <label for="address" />Address: </label>
         <input name="address" type="text" />
         <select name="carrier">
             <option>Email address</option>
+            <% FOREACH carrier = carriers %>
+            <option><% carrier.name %></option>
+            <% END %>
         </select>
         <input type="submit" value="submit" />
     </form>

@@ -12,16 +12,26 @@ our $VERSION = '1.0';
 
 get '/' => sub {
     if ($ENV{REMOTE_USER}) {
-        template 'index';
-    } else {
         template 'admin';
+    } else {
+        my @carriers = database->quick_select('carriers', { 1 => 1 });
+        template 'index', {
+            carriers => \@carriers
+        };
     }
 };
 
-post '/address/add' => sub {
+post '/members/add' => sub {
+    my $address = params->{'address'};
+
+    if (params->{'carrier'} ne 'Email address') {
+        $address .= '@';
+        $address .= database->quick_select('carriers', { name => params->{'carrier'} })->{'suffix'};
+    }
+
     database->quick_insert('members', { 
                                 name => params->{'name'}, 
-                                address => params->{'address'} 
+                                address => $address
                             }) 
         or flash(error => $DBI::errstr);
 
