@@ -11,7 +11,7 @@
 
     <table><tr><th>Name</th><th>Suffix</th></tr>
     <% FOREACH carrier = carriers %>
-    <tr><td><% carrier.name %></td><td><% carrier.suffix %></td><td><a href="/carriers/delete/<% carrier.name %>">Delete</a></td></tr>
+    <tr><td><% carrier.name | html %></td><td><% carrier.suffix | html %></td><td><a href="/carriers/delete/<% carrier.name | html %>">Delete</a></td></tr>
     <% END %>
     </table>
 

@@ -4,25 +4,30 @@ use Dancer::Plugin::Auth::RBAC;
 use Dancer::Plugin::Database;
 use Dancer::Plugin::Email;
 use Dancer::Plugin::FlashMessage;
-
-use Data::Dumper;
-
-use 5.012;
+use URI::Escape
 
 our $VERSION = '1.0';
 
 before sub {
-    if (not authd() and request->path_info ne '/login') {
+    if (not authd() and 
+        request->path_info ne '/login' and 
+        request->path_info ne '/members/add') {
         request->path_info('/');
     }
 };
 
 get '/' => sub {
-    my @carriers = database->quick_select('carriers', { 1 => 1 });
-    template 'index', {
-        carriers => \@carriers,
-        auth => authd
-    };
+    if (not authd()) {
+        my @carriers = database->quick_select('carriers', { 1 => 1 });
+        template 'index', {
+            carriers => \@carriers,
+            auth => authd
+        };
+    } else {
+        template 'admin', {
+            auth => authd
+        };
+    }
 };
 
 post '/members/add' => sub {
