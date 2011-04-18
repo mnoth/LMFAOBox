@@ -1,10 +1,14 @@
 package lmfaobox;
 use Dancer ':syntax';
 
-our $VERSION = '0.1';
+our $VERSION = '1.0';
 
 get '/' => sub {
-    template 'index';
+    if ($ENV{REMOTE_USER}) {
+        template 'admin';
+    } else {
+        template 'index';
+    }
 };
 
 true;

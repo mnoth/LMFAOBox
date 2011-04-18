@@ -1,0 +1,13 @@
+<div id="header">
+    <a href="/" alt="Send message">Message</a>
+    <a href="/manage" alt="Manage members">Membership</a>
+    <a href="/carrier" alt="Add carriers">Carriers</a>
+</div>
+
+<div id="page">
+    <form>
+        <label for=message>Message</label>
+        <input type=text name=message />
+        <input type=submit value=Submit />
+    </form>
+</div>
