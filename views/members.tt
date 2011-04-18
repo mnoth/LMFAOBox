@@ -17,7 +17,7 @@
 
     <table><tr><th>Name</th><th>Address</th></tr>
     <% FOREACH member = members %>
-    <tr><td><% member.name %></td><td><% member.address %></td></tr>
+    <tr><td><% member.name %></td><td><% member.address %></td><td><a href="/members/delete/<% member.id %>">Delete</a></td></tr>
     <% END %>
     </table>
 

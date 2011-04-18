@@ -51,4 +51,36 @@ get '/members/list' => sub {
     };
 };
 
+get '/members/delete/:id' => sub {
+    database->quick_delete('members', { id => params->{'id'} }) or flash(error => $DBI::errstr);
+    flash(info => "Member deleted");
+    redirect '/members/list';
+};
+
+
+get '/carriers/list' => sub {
+    my @carriers = database->quick_select('carriers', { 1 => 1 }) or
+        flash(error => $DBI::errstr);
+
+    template 'carriers', {
+        'carriers' => \@carriers
+    };
+};
+
+post '/carriers/add' => sub {
+    database->quick_insert('carriers', {
+                                name => params->{'name'},
+                                suffix => params->{'suffix'}
+                            }) or flash(error => $DBI::errstr);
+    
+    flash(info => "Carrier added");
+    redirect '/carriers/list';
+};
+
+get '/carriers/delete/:name' => sub {
+    database->quick_delete('carriers', { name => params->{'name'} }) or flash(error => $DBI::errstr);
+    flash(info => "Carrier deleted");
+    redirect '/carriers/list';
+};
+
 true;
