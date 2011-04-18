@@ -43,7 +43,7 @@ post '/message' => sub {
     foreach my $member (database->quick_select('members', { 1 => 1 } )) {
         email {
             to => $member->{address},
-            from => 'ay1244@gmail.com',
+            from => 'freshmen@csh.rit.edu',
             message => params->{'message'},
         };
     }
