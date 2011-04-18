@@ -4,3 +4,4 @@ blib/*
 *.swo
 *.bak
 .DS_Store
+lmfaobox.sqlite

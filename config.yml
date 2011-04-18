@@ -27,3 +27,13 @@ template: "simple"
 #     start_tag: '[%'
 #     end_tag:   '%]'
 
+
+plugins:
+    Database:
+        connections:
+            lmfaobox:
+                driver: "SQLite"
+                database: "lmfaobox.sqlite"
+                dbi_params:
+                    RaiseError: 1
+                    AutoCommit: 1
