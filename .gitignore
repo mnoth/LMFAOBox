@@ -1,0 +1,6 @@
+MYMETA.yml
+blib/*
+*.swp
+*.swo
+*.bak
+.DS_Store
