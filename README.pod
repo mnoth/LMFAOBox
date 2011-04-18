@@ -1,0 +1,15 @@
+=pod
+
+=head1 LMFAOBox
+
+A mass text messaging webapp for CSH
+
+=head2 Isn't this just ROFLBox?
+
+Yes.
+
+=head2 What the hell is ROFLBox?
+
+Ask Mustache Dave.
+
+=cut
