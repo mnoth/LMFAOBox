@@ -4,6 +4,7 @@
 
 # App config
 from_address: "freshmen@csh.rit.edu"
+twitter: true
 
 appname: "lmfaobox"
 layout: "main"
@@ -31,3 +32,10 @@ plugins:
                         password: admin
                         roles:
                             - admin
+
+    Auth::Twitter:
+        consumer_key: "aBObAOWaJlFg6037HTPJkg"
+        consumer_secret: "iphRuNiPKUHpXLhk0un9VyBsVlnIXTZt96AynXAJnc"
+        callback_url: "http://rancor.csh.rit.edu:8080/auth/twitter/callback"
+        callback_success: "/"
+        callback_fail: "/"

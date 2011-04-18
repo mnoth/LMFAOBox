@@ -1,12 +1,15 @@
 package lmfaobox;
 use Dancer ':syntax';
 use Dancer::Plugin::Auth::RBAC;
+use Dancer::Plugin::Auth::Twitter;
 use Dancer::Plugin::Database;
 use Dancer::Plugin::Email;
 use Dancer::Plugin::FlashMessage;
 use Mail::RFC822::Address qw/valid/;
 
 our $VERSION = '1.0';
+
+auth_twitter_init();
 
 before sub {
     if (not authd() and 
@@ -24,6 +27,10 @@ get '/' => sub {
             auth => authd
         };
     } else {
+        if (not session('twitter_user')) {
+            redirect auth_twitter_authenticate_url();
+        }
+
         template 'admin', {
             auth => authd
         };
@@ -63,6 +70,10 @@ post '/message' => sub {
             from => config->{'from_address'},
             message => params->{'message'},
         };
+    }
+
+    if (config->{'twitter'}) {
+        twitter->update(params->{'message'});
     }
 
     flash(info => 'Message sent');
