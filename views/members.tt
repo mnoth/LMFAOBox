@@ -14,9 +14,11 @@
         <span id="error"><% flash.error %></span>
     <% END %>
 
-    <form action="/message" method="post">
-        <label for=message>Message</label>
-        <input type=text name=message />
-        <input type=submit value=Submit />
-    </form>
+
+    <table><tr><th>Name</th><th>Address</th></tr>
+    <% FOREACH member = members %>
+    <tr><td><% member.name %></td><td><% member.address %></td></tr>
+    <% END %>
+    </table>
+
 </div>

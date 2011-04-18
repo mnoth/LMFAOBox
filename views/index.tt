@@ -1,10 +1,15 @@
 <div id="page">
 
-    <span id="flash"><% flash.info %></span>
-    <span id="error"><% flash.error %></span>
+    <% IF flash.info %>
+        <span id="flash"><% flash.info %></span>
+    <% END %>
+
+    <% IF flash.error %>
+        <span id="error"><% flash.error %></span>
+    <% END %>
 
     <h1>Sign up for CSH Notifications on LMFAOBox!</h1>
-    <form action="/add/address" method="post">
+    <form action="/address/add" method="post">
         <label for="name" />Name: </label>
         <input name="name" type="text" />
         <label for="address" />Address: </label>

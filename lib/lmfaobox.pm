@@ -18,7 +18,7 @@ get '/' => sub {
     }
 };
 
-post '/add/address' => sub {
+post '/address/add' => sub {
     database->quick_insert('members', { 
                                 name => params->{'name'}, 
                                 address => params->{'address'} 
@@ -40,6 +40,15 @@ post '/message' => sub {
 
     flash(info => 'Message sent');
     redirect '/';
+};
+
+get '/members/list' => sub {
+    my @members = database->quick_select('members', { 1 => 1 }) or 
+        flash(error => $DBI::errstr);
+
+    template 'members', {
+        'members' => \@members
+    };
 };
 
 true;
