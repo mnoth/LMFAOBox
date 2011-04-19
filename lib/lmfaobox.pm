@@ -126,7 +126,7 @@ get '/carriers/delete/:name' => sub {
 post '/login' => sub {
     my $auth = auth(params->{'user'}, params->{'pass'});
     if ($auth->errors) {
-        say $auth->errors;
+        flash(error => $auth->errors);
     } else {
         redirect '/';
     }
