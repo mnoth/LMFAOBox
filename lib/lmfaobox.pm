@@ -64,6 +64,12 @@ post '/members/add' => sub {
 };
 
 post '/message' => sub {
+    if (not defined session('twitter_user') and session('twitter') == 1) {
+        flash(error => 'Message not sent, try again');
+        redirect auth_twitter_authenticate_url();
+        return;
+    }
+
     foreach my $member (database->quick_select('members', { 1 => 1 } )) {
         email {
             to => $member->{address},
@@ -72,9 +78,10 @@ post '/message' => sub {
         };
     }
 
-    if (session('twitter_user')) {
+    if (session('twitter_user') and session('twitter')) {
         twitter->update(params->{'message'});
-    }
+        flash(info => 'Tweeted');
+    } 
 
     flash(info => 'Message sent');
     redirect '/';
