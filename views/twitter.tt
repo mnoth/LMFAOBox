@@ -2,7 +2,7 @@
     <h2>Twitter Integration</h2>
     <form action="/twitter/connect" method="post"> 
         <label for="twitter">Connect with Twitter</label>
-        <input type="checkbox" name="twitter" checked /><br />
+        <input type="checkbox" name="twitter" <% IF twitter %>checked<% END %> /><br />
         <input type="submit" value="Save!" />
     </form>
 </div>

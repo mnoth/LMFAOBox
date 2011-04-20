@@ -138,13 +138,14 @@ post '/twitter/connect' => sub {
         redirect auth_twitter_authenticate_url();
     } else {
         session('twitter' => 0);
-        redirect '/';
+        redirect '/twitter';
     }
 };
 
 get '/twitter' => sub {
     template 'twitter', {
-        auth => authd
+        auth => authd(),
+        twitter => session('twitter')
     };
 };
 
