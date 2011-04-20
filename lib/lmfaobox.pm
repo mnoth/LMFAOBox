@@ -16,6 +16,10 @@ before sub {
         request->path_info ne '/login' and 
         request->path_info ne '/members/add') {
         request->path_info('/');
+    } else {
+        if (not defined session('twitter')) {
+            session(twitter => config{'twitter'});
+        }
     }
 };
 
@@ -27,10 +31,6 @@ get '/' => sub {
             auth => authd
         };
     } else {
-        if (not session('twitter_user')) {
-            redirect auth_twitter_authenticate_url();
-        }
-
         template 'admin', {
             auth => authd
         };
@@ -72,7 +72,7 @@ post '/message' => sub {
         };
     }
 
-    if (config->{'twitter'}) {
+    if (session('twitter_user')) {
         twitter->update(params->{'message'});
     }
 
@@ -127,9 +127,25 @@ post '/login' => sub {
     my $auth = auth(params->{'user'}, params->{'pass'});
     if ($auth->errors) {
         flash(error => $auth->errors);
+    } 
+
+    redirect '/';
+};
+
+post '/twitter/connect' => sub {
+    if (params->{'twitter'}) {
+        session('twitter' => 1);
+        redirect auth_twitter_authenticate_url();
     } else {
+        session('twitter' => 0);
         redirect '/';
     }
+};
+
+get '/twitter' => sub {
+    template 'twitter', {
+        auth => authd
+    };
 };
 
 true;

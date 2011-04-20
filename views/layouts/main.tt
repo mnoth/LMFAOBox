@@ -12,6 +12,7 @@
     <a href="/" alt="Send message">Message</a>
     <a href="/members/list" alt="Manage members">Membership</a>
     <a href="/carriers/list" alt="Add carriers">Carriers</a>
+    <a href="/twitter" alt="Twitter Integration">Twitter</a>
 </div>
 <% END %>
 <% content %>
