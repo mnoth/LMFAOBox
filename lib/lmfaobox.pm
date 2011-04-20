@@ -18,7 +18,7 @@ before sub {
         request->path_info('/');
     } else {
         if (not defined session('twitter')) {
-            session(twitter => config{'twitter'});
+            session(twitter => config->{'twitter'});
         }
     }
 };
