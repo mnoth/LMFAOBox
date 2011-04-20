@@ -4,7 +4,7 @@
 
 # App config
 from_address: "freshmen@csh.rit.edu"
-twitter: 1
+twitter: 0
 
 appname: "lmfaobox"
 layout: "main"
